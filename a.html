@@ -1,0 +1,182 @@
+<html>
+    <style>
+        input{
+            width: 50px;
+        }
+        button{
+            margin-left: 20px;
+        }
+        .result-box{
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+    <head>
+        <script>
+            function f1(){
+                var a = parseFloat(document.getElementById("a1").value);
+                var b = parseFloat(document.getElementById("b1").value);
+                var c = parseFloat(document.getElementById("c1").value);
+                var res = document.getElementById("res1");
+                if(a==0 && b==0 && c==0)  
+                    res.value = "Vô số nghiệm";
+                else if(a==0 && (b!=0 || c!=0))   
+                    res.value = "Vô nghiệm";
+                else{
+                    var x = (c - b/a)
+                    if (!isNaN(x))
+                        res.value = "x = " + x;
+                }
+
+                
+            }
+            function f2(){
+                var a = parseFloat(document.getElementById("a2").value);
+                var b = parseFloat(document.getElementById("b2").value);
+                var c = parseFloat(document.getElementById("c2").value);
+                var d = parseFloat(document.getElementById("d2").value);
+                var res = document.getElementById("res2");
+                
+                
+
+                if(d!=0)
+                    c -= d;
+                
+                if(a == 0){
+                    var x = (c - b)/a;
+                    if (!isNaN(x))
+                        res.value = x;
+                }else{
+                    var delta = Math.pow(b,2) - 4*a*c;
+                    if(delta > 0)
+                        res.value = "Phương trình có 2 nghiệm phân biệt \r\n x1 = " + ((-b+Math.sqrt(delta))/(2*a)).toFixed(3) 
+                        + ",     x2 = " + ((-b-Math.sqrt(delta))/(2*a)).toFixed(3);
+                    else if(delta == 0)
+                        res.value = "Phương trình có nghiệm kép \r\n x = " + (-b/2*a);
+                    else    
+                        res.value = "Phương trình vô nghiệm";
+                }
+
+                if(a==0 && b==0 && c==0 && d==0)  
+                    res.value = "Vô số nghiệm";
+                else if(a==0 && b==0 && (c!=0 || d!=0))   
+                    res.value = "Vô nghiệm";
+            }
+            function f3(){
+                var a = parseInt(document.getElementById("canh 1").value);
+                var b = parseInt(document.getElementById("canh 2").value);
+                var c = parseInt(document.getElementById("canh 3").value);
+                var res = document.getElementById("res3");
+                if( a<b+c && b<a+c && c<a+b ){
+                    if( a*a==b*b+c*c || b*b==a*a+c*c || c*c== a*a+b*b)
+                        if(a==b || a==c || b==c)
+                        res.value = "Đây là tam giác vuông cân";
+                        else 
+                            res.value = "Đây là tam giác vuông";
+                    else if(a==b && b==c)
+                        res.value = "Đây là tam giác đều";
+                    else if(a==b || a==c || b==c)
+                        res.value = "Đây là tam giác cân";
+                    else
+                        res.value = "Đây là tam giác thường";
+                }
+                else
+                    res.value = "Ba cạnh trên không tạo thành một tam giác";
+                        }
+            function dateIsValid(date){
+                if (
+                    typeof date === 'object' &&
+                    date !== null &&
+                    typeof date.getTime === 'function' &&
+                    !isNaN(date)
+                ) {
+                    return true;
+                }
+
+                return false;
+            }
+            function fCheckDate(){
+                if(dateIsValid(new Date(document.getElementById("txbCheckDate").value)))
+                    document.getElementById("txaResultCheckDate").value = "Hợp lệ";
+                else    
+                    document.getElementById("txaResultCheckDate").value = "không hợp lệ";
+            }
+
+            function fClassificate(){
+                score = parseFloat(document.getElementById("txbAvgScore").value);
+                res = document.getElementById("txaResultClassificate");
+                if (0<=score && score<=10){
+                    if(score > 8) res.value = "Xếp loại Giỏi";
+                    else if(score > 6.5) res.value = "Xếp loại Khá";
+                    else if(score > 5) res.value = "Xếp loại Trung bình";
+                    else res.value = "Xếp loại Yếu";
+                }else res.value = "Không hợp lệ";
+            }
+
+            function fYearOfBirth(){
+                y = parseInt(document.getElementById("txbYearOfBirth").value);
+                res = document.getElementById("txaYearOfBirth");
+                now = new Date().getFullYear();
+                if(now - y >= 18)
+                    res.value = now - y;
+                else
+                    res.value = "Chưa đủ 18";
+            }
+        </script>
+    </head>
+
+    <body>
+        <h4>Phương trình bậc nhất</h4>
+        <div>
+            <input id="a1" type="text" value=""/> x + 
+            <input id="b1"  type="text" value=""/> =
+            <input id="c1"  type="text" value="0"/>
+            <button id="btn1" onclick="f1()">Tính</button>
+            <br><br>Kết quả: <textarea id="res1" name="text" rows="4" cols="50"></textarea>
+        </div>
+
+        <h4>Phương trình bậc hai</h4>
+        <div>
+            <input id="a2" type="text" value=""/> x <sup>2</sup> +
+            <input id="b2" type="text" value=""/> x +
+            <input id="c2" type="text" value=""/> =
+            <input id="d2" type="text" value="0"/>
+            <button id="btn2" onclick="f2()">Tính</button>
+            <br><br>Kết quả: <textarea id="res2" name="text" rows="4" cols="50"></textarea>
+        </div>
+
+        <h4>Kiểm tra tam giác</h4>
+        <div>
+            Nhập cạnh thứ nhất <input id="canh 1" type="text" value=""/> <br><br>
+            Nhập cạnh thứ hai <input id="canh 2" type="text" value=""/> <br><br>
+            Nhập cạnh thứ ba <input id="canh 3" type="text" value=""/>
+
+            <button id="btnCheckTriangle" onclick="f3()">Kiểm tra</button>
+            <br><br>Kết quả: 
+            <textarea id="res3" name="text" rows="4" cols="50"></textarea>
+        </div>
+
+        <h4>Kiểm tra định dạng ngày, tháng, năm</h4>
+        <div>
+            Nhập <input id="txbCheckDate" type="text" value="" style="width: 150px;"/>
+            <button id="btnCheckDate" onclick="fCheckDate()">Kiểm tra</button><br><br>Kết quả: 
+            <textarea id="txaResultCheckDate" name="text" rows="4" cols="50"></textarea>
+        </div>
+
+        <h4>Xếp loại</h4>
+        <div>
+            Nhập điểm trung bình 
+            <input id="txbAvgScore" type="text" />
+            <button id="btnClassificate" onclick="fClassificate()">Xếp loại</button><br><br>
+            <textarea id="txaResultClassificate" name="text" rows="4" cols="50"></textarea>
+        </div>
+
+        <h4>Năm sinh</h4>
+        <div>
+            Nhập năm sinh
+            <input id="txbYearOfBirth" type="text" />
+            <button id="btnYearOfBirth" onclick="fYearOfBirth()">Xem tuổi</button><br><br>
+            <textarea id="txaYearOfBirth" name="text" rows="4" cols="50"></textarea>
+        </div>
+    </body>
+</html>
